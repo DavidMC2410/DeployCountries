@@ -8,7 +8,6 @@ import React from 'react';
 import AboutMe from './components/Page/AboutMe/AboutMe.jsx'
 import AboutProject from './components/Page/AboutProject/AboutProject.jsx';
 import axios from 'axios';
-
 axios.defaults.baseURL = 'http://localhost:3001/'
 
 function App() {
@@ -23,7 +22,6 @@ function App() {
       <Route exact path='/detail/:detailId' element={<DetailCard/>} />
       <Route exact path='/aboutMe' element={<AboutMe/>} />
       <Route exact path='/aboutProject' element={<AboutProject/>} />
-
 
       </Routes>
 
