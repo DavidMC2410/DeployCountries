@@ -7,7 +7,9 @@ import CreatedActivity from './components/Page/CreatedActivity/CreatedActivity.j
 import React from 'react';
 import AboutMe from './components/Page/AboutMe/AboutMe.jsx'
 import AboutProject from './components/Page/AboutProject/AboutProject.jsx';
-//  <Route exact path='/detail/:detailId' element={<DetailCard/>} />
+import axios from 'axios';
+
+axios.defaults.baseURL = 'http://localhost:3001/'
 
 function App() {
   return (

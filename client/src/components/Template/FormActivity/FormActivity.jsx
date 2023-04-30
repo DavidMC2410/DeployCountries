@@ -67,7 +67,7 @@ export default function FormActivity(){
     const handleSubmit = async (e)=>{
         e.preventDefault();
         if  ((!errors.name)&&(!errors.difficulty)&&(!errors.duration)&&(form.season!=='')&&(form.countries.length!==0)){
-            await axios.post('http://localhost:3001/activities',form)
+            await axios.post('/activities',form)
             .then(({data})=>{alert(data.msg);navigate('/home')})
             .catch(error => {alert('404 not found '+error);navigate('/home')})
         }else{
