@@ -1,0 +1,26 @@
+.containerDetail{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 380px;
+}
+
+.containerInfo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #ff910085;
+    width: 380px;
+    height: 320px;
+}
+
+.text{
+    margin: 4px;
+    color: rgb(0, 0, 0);
+    font-size: 20px;
+    font-family: 'Fira Sans', sans-serif;
+    justify-content: center;
+    text-align: center;
+}
