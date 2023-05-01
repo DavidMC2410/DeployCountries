@@ -8,7 +8,7 @@ import React from 'react';
 import AboutMe from './components/Page/AboutMe/AboutMe.jsx'
 import AboutProject from './components/Page/AboutProject/AboutProject.jsx';
 import axios from 'axios';
-axios.defaults.baseURL = 'http://localhost:3001/'
+axios.defaults.baseURL = 'https://deploycountries-production.up.railway.app/'
 
 function App() {
   return (
