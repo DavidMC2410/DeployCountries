@@ -20,12 +20,14 @@
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
 const { dataToDataBase } = require('./src/controllers')
+require('dotenv').config();
+const { PORT }=process.env
 
 // Syncing all the models at once.
 conn.sync({ force: false }).then(async() => {
   console.log('connect to DB');
   await dataToDataBase ();
-  server.listen(3001, () => {
+  server.listen(PORT, () => {
     console.log('listening at 3001'); // eslint-disable-line no-console
   });
 });
