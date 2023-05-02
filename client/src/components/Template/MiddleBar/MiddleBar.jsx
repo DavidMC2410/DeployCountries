@@ -11,6 +11,7 @@ import {
     getCountryByName,
     resetCountries} from '../../../redux/actions';
 import style from './MiddleBar.module.css';
+import {useRef} from 'react';
 
 export default function MiddleBar(){
     
@@ -28,6 +29,7 @@ export default function MiddleBar(){
     const arrayAlphabet=['A-Z','Z-A'];
     const arrayPopulation=['Ascending','Descending']
     let activityName = activities.map(activity=> activity.name)
+    const selectRefs = [useRef(null), useRef(null), useRef(null), useRef(null)];
 
     const handleSearchBarChange = (value)=>{
         dispatch(getCountryByName(value));   
@@ -59,6 +61,11 @@ export default function MiddleBar(){
 
     const handleResetChange = ()=>{
         dispatch(resetCountries());
+        selectRefs.forEach((ref) => {
+            if (ref.current) {
+            ref.current.selectedIndex = 0;
+        }
+        });
     }
 
     return(
@@ -71,22 +78,22 @@ export default function MiddleBar(){
 
         <div className={style.element}>
             <Label style={style.label} htmlfor='OrderAlphabet' text='Sort Alphabetically '/>
-            <Select styleOption={style.selectOption} style={style.select} size='1' multiple={false} arrayOptions={arrayAlphabet} id='OrderAlphabet' select={handleSelectAlphabetChange} />
+            <Select selectRef={selectRefs[0]} styleOption={style.selectOption} style={style.select} size='1' multiple={false} arrayOptions={arrayAlphabet} id='OrderAlphabet' select={handleSelectAlphabetChange} />
         </div>
 
         <div className={style.element}>
           <Label style={style.label} htmlfor='OrderPopulation' text='Sort by Population '/>
-          <Select style={style.select} size='1' multiple={false} arrayOptions={arrayPopulation} id='OrderPopulation' select={handleSelectPopulationChange} />
+          <Select selectRef={selectRefs[1]} style={style.select} size='1' multiple={false} arrayOptions={arrayPopulation} id='OrderPopulation' select={handleSelectPopulationChange} />
         </div>
 
         <div className={style.element}>
            <Label style={style.label} htmlfor='FilterContinent' text='Filter by Continent '/>
-           <Select style={style.select} size='1' multiple={false} arrayOptions={arrayContinent} id='FilterContinent' select={handleSelectContinentChange} />
+           <Select selectRef={selectRefs[2]} style={style.select} size='1' multiple={false} arrayOptions={arrayContinent} id='FilterContinent' select={handleSelectContinentChange} />
         </div>
 
         <div className={style.element}>
           <Label style={style.label} htmlfor='FilterActivity' text='Filter by Activity '/>
-           <Select style={style.select} size='1' multiple={false} arrayOptions={activityName} id='FilterActivity' select={handleSelectActivityChange}/>
+           <Select selectRef={selectRefs[3]} style={style.select} size='1' multiple={false} arrayOptions={activityName} id='FilterActivity' select={handleSelectActivityChange}/>
         </div>
 
         <div className={style.element}>

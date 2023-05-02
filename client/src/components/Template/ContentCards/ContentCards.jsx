@@ -23,8 +23,11 @@ export default function ContentCards(){
 
   let countries = allCountries.slice(firstCard,lastCard)
 
-    
   const maxPag=Math.ceil(allCountries.length/10);
+
+  useEffect(()=>{
+    setPag(1);
+  },[allCountries])
 
   const handlePrevPage = () => {
     if (pag > 1) {
