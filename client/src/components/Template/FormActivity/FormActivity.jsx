@@ -40,12 +40,14 @@ export default function FormActivity(){
         countries:''
     });
 
+
+
     const handleInputChange = (e)=>{
         
         const {name, value}=e.target
-        const newForm = {...form, [name] : value}
-        setErrors(validation(newForm, name, errors))
-        setForm(newForm);
+        const newInput = {...form, [name] : value}
+        setErrors(validation(newInput, name, errors))
+        setForm(newInput);
         
     }
 
@@ -63,10 +65,11 @@ export default function FormActivity(){
         setForm(newCountry);        
       }
 
-      function handleDeleteCountry(event) {
+    function handleDeleteCountry(event) {
         const deleteCountry = {...form, countries: form.countries.filter(c=>c!==event.target.value)}
         setErrors(validation(deleteCountry, "countries",errors))
         setForm(deleteCountry);
+
     }
 
     const handleInputBlur=(e)=>{
@@ -77,10 +80,12 @@ export default function FormActivity(){
         handleSelectSeasonChange(e)
     }
 
+
+
     const handleSubmit = async (e)=>{
         e.preventDefault();
         if  ((!errors.name)&&(!errors.difficulty)&&(!errors.duration)&&(form.season!=='')&&(form.countries.length!==0)){
-            await axios.post('/activities',form)
+            await axios.post('http://localhost:3001/activities',form)
             .then(({data})=>{alert(data.msg);navigate('/home')})
             .catch(error => {alert('404 not found '+error);navigate('/home')})
         }else{
@@ -129,6 +134,6 @@ export default function FormActivity(){
             <div>
                 <Button style={style.button} onClick={handleSubmit} keyValue="Submit" text="Submit"/>
             </div>
-        </form>
+            </form>
     )
 }
