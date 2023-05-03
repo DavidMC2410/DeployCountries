@@ -41,7 +41,6 @@ export default function FormActivity(){
     const handleInputChange = (e)=>{
         
         const {name, value}=e.target
-        console.log(value);
         const newForm = {...form, [name] : value}
         setErrors(validation(newForm, name, errors))
         setForm(newForm);
@@ -49,19 +48,31 @@ export default function FormActivity(){
     }
 
     const handleSelectSeasonChange = (e)=>{
-        setForm({...form, season: e.target.value})
+        const { name,value }=e.target;
+        const newSeason = {...form, [name] : value}
+        setErrors(validation(newSeason, name,errors))
+        setForm(newSeason)
     }
 
     function handleSelectCountriesChange(event) {
-
-        setForm({...form, countries: [...form.countries, event.target.value]});        
-  
+        const {name,value }=event.target;
+        const newCountry = {...form, [name] : [...form.countries, value]}
+        setErrors(validation(newCountry, "countries",errors))
+        setForm(newCountry);        
       }
 
-    function handleDeleteCountry(event) {
-        
-        setForm({...form, countries: form.countries.filter(c=>c!==event.target.value)});
+      function handleDeleteCountry(event) {
+        const deleteCountry = {...form, countries: form.countries.filter(c=>c!==event.target.value)}
+        setErrors(validation(deleteCountry, "countries",errors))
+        setForm(deleteCountry);
+    }
 
+    const handleInputBlur=(e)=>{
+        handleInputChange(e)
+    }
+
+    const handleSeasonBlur=(e)=>{
+        handleSelectSeasonChange(e)
     }
 
     const handleSubmit = async (e)=>{
@@ -81,31 +92,33 @@ export default function FormActivity(){
             <div className={style.dataContainer}>
                 <div className={style.sectionContainer}>
                     <Label style={style.label} htmlFor='name' text='Name Activity: '/>
-                    <Input style={style.input} onChange={handleInputChange} id="name" type="text" value={form.name}/>
+                    <Input blur={handleInputBlur} style={style.input} onChange={handleInputChange} id="name" type="text" value={form.name}/>
                     {errors.name && <p style={{backgroundColor: '#ffffcc', border: '1px solid #ff0000', padding: '10px', color: '#000'}}>{errors.name}</p>}
                 </div>
 
                 <div className={style.sectionContainer}>
                     <Label style={style.label} htmlFor='difficulty' text='Difficulty: ' />
-                    <Input style={style.input} onChange={handleInputChange} id="difficulty" type="number" value={form.difficulty}/>
+                    <Input blur={handleInputBlur} style={style.input} onChange={handleInputChange} id="difficulty" type="number" value={form.difficulty}/>
                     {errors.difficulty && <p style={{backgroundColor: '#ffffcc', border: '1px solid #ff0000', padding: '10px', color: '#000'}}>{errors.difficulty}</p>}
                 </div>
 
                 <div className={style.sectionContainer}>
                     <Label style={style.label} htmlFor='duration' text='Duration(hours): '/>
-                    <Input style={style.input} onChange={handleInputChange} id="duration" type="number" value={form.duration}/>
+                    <Input blur={handleInputBlur} style={style.input} onChange={handleInputChange} id="duration" type="number" value={form.duration}/>
                     {errors.duration && <p style={{backgroundColor: '#ffffcc', border: '1px solid #ff0000', padding: '10px', color: '#000'}}>{errors.duration}</p>}
                 </div>
 
                 <div className={style.sectionContainer}>
-                    <Label style={style.label} htmlFor='seson' text='Seson: '/>
-                    <Select style={style.select} id="seson" select={handleSelectSeasonChange} arrayOptions={seasons} size="1" multiple={false} />
+                    <Label style={style.label} htmlFor='season' text='Seson: '/>
+                    <Select blur={handleSeasonBlur} style={style.select} id="season" select={handleSelectSeasonChange} arrayOptions={seasons} size="1" multiple={false} />
                     <p>Selected option: {form.season}</p>
+                    {errors.season && <p style={{backgroundColor: '#ffffcc', border: '1px solid #ff0000', padding: '10px', color: '#000'}}>{errors.season}</p>}
                 </div>
 
                 <div className={style.sectionContainer}>
                     <Label style={style.label} htmlFor='countries' text='Country(ies): '/>
                     <Select style={style.select} id='countries' arrayOptions={countriesName} select={handleSelectCountriesChange} size="1"  multiple={false}/>
+                    {errors.countries && <p style={{backgroundColor: '#ffffcc', border: '1px solid #ff0000', padding: '10px', color: '#000'}}>{errors.countries}</p>}
                     <p>Selected options: (Click to delete)</p>
                     <Select style={style.select} id='deleteCountry' arrayOptions={form.countries} select={handleDeleteCountry} size="1"  multiple={false}/>
                 </div>
@@ -114,6 +127,6 @@ export default function FormActivity(){
             <div>
                 <Button style={style.button} onClick={handleSubmit} keyValue="Submit" text="Submit"/>
             </div>
-            </form>
+        </form>
     )
 }
