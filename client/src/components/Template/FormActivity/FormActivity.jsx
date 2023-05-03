@@ -35,7 +35,9 @@ export default function FormActivity(){
     const [errors, setErrors]=useState({
         name:'',
         difficulty:'',
-        duration:''
+        duration:'',
+        season:'',
+        countries:''
     });
 
     const handleInputChange = (e)=>{
@@ -57,7 +59,7 @@ export default function FormActivity(){
     function handleSelectCountriesChange(event) {
         const {name,value }=event.target;
         const newCountry = {...form, [name] : [...form.countries, value]}
-        setErrors(validation(newCountry, "countries",errors))
+        setErrors(validation(newCountry, name,errors))
         setForm(newCountry);        
       }
 
